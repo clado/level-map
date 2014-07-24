@@ -1,0 +1,37 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.levelVal {
+  position: relative;
+}
+
+.levelValLabel {
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid;
+  position: absolute;
+  left: 0px;
+  height: 100%;
+}
+
+.levels {
+  display: flex;
+  justify-content: center;
+  padding: 5px 0px;
+}
+
+section {
+	background-color: #DDD;
+	display: flex-box;
+  margin: 5px 10px;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+article {
+	overflow: hidden;
+	height: 0px;
+}

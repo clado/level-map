@@ -1,0 +1,26 @@
+<! DOCTYPE HTML>
+<html ng-app="levelApp">
+	<head>
+    <meta charset="UTF-8">
+    <title>Level Map</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="js/angular.min.js" type="text/javascript"></script>
+    <script src="js/angular-local-storage.js" type="text/javascript"></script>
+    <script src="js/level-map-controller.js" type="text/javascript"></script>
+	</head>
+
+  <body ng-controller="LevelMapController as ctrl">
+    <h1>Level Map</h1>
+
+    <div class="levelVal" ng-repeat="(levelValue, levels) in ctrl.levels">
+      <div class="levelValLabel">{{levelValue}}</div>
+
+      <div class="levels">
+        <level ng-repeat="level in levels" level="level"></level>
+      </div>
+
+    </div>
+
+
+  </body>
+</html>
