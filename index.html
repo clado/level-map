@@ -16,9 +16,15 @@
       <div class="levelValLabel">{{levelValue}}</div>
 
       <div class="levelRow">
-        <levelinfo ng-repeat="levelthing in levels" level="levelthing"></levelinfo>
+        <levelinfo ng-repeat="leveldata in levels" level="leveldata"></levelinfo>
       </div>
 
+    </div>
+
+    <div ng-repeat="(levelValue, levels) in ctrl.levels">
+        <div ng-repeat="leveldata in levels">
+          <levelconnector ng-repeat="parent in leveldata.parents" child="{{leveldata.url}}" parent="{{parent}}"></levelconnector>
+        </div>
     </div>
 
   </body>

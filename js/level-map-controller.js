@@ -3,74 +3,76 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
 
     this.defaults = {
       1: [
-        { 'url': 'thingading.html', 'title': 'The Title', 'parents':[], 'solution': 'This is the wrong solution' },
+        { 'url': 'thingading.html', 'parents':[], 'solution': 'This is the wrong solution' },
       ],
       2: [
-        { 'url': 'things.html', 'title': 'Title', 'parents':['thingading.html'], 'solution': 'This is the solution' },
-        { 'url': 'stuff.html', 'title': 'Another Title', 'parents':['thingading.html'], 'solution': 'This is the solution to the second thing' }
+        { 'url': 'things.html', 'parents':['thingading.html'], 'solution': 'This is the solution' },
+        { 'url': 'stuff.html', 'parents':['thingading.html'], 'solution': 'This is the solution to the second thing' }
       ],
       3: [
-        { 'url': 'a/things.html', 'title': 'Title', 'parents':['things.html', 'stuff.html'], 'solution': 'This is the solution' },
-        { 'url': 'a/stuff.html', 'title': 'Another Title', 'parents':['stuff.html'], 'solution': 'This is the solution to the second thing' }
+        { 'url': 'a/things.html', 'parents':['things.html', 'stuff.html'], 'solution': 'This is the solution' },
+        { 'url': 'a/stuff.html', 'parents':['stuff.html'], 'solution': 'This is the solution to the second thing' }
       ]
     }
 
     this.init = function(){
-
       var levels = localStorageService.get('levels')
       this.levels = levels ? levels : this.defaults
-
-      this.connectLevels()
-
-    }
-
-    this.connectLevels = function(){
-      // this.defaults.forEach(function(levelVal){
-      //   levelVal.forEach(function(level){
-      //     level.parents.forEach(function(parent){
-
-      //     })
-      //   })
-      // })
     }
 
     this.init()
 
   }])
-  .directive('levelinfo', function($timeout) {
+  .directive('levelinfo', function() {
     return {
       restrict: 'E',
       scope: {
         level: '='
       },
       //templateUrl: 'templates/level.html',
-      template: '<section id="{{level.url}}"><p>{{level.url}}</p><p>{{level.title}}</p><article><div class="revealSolution" ng-click="connectLevels()" onclick="console.log(\'things\')"></div>{{level.solution}}</article></section>',
+      template: '<section id="{{level.url}}"><p>{{level.url}}</p><article><div class="revealSolution"></div>{{level.solution}}</article></section>',
       link: function(scope, element, attrs) {
 
-        scope.connect = connect
+        scope.hideSolution = function() {
 
-        scope.do = function() {
-          console.log("THINGS!")
-        //   //console.log(element.find('article'))
         }
 
-        var connectLevels = function(){
-          scope.level.parents.forEach(function(parent){
-            //document.getElementById(scope.level.url)
-            scope.connect(element, document.getElementById(scope.level.url), document.getElementById(parent), 'things')
-          })
+        scope.showSolution = function() {
+
         }
 
-        scope.connectLevels = connectLevels
+      }
+    }
+  })
+  .directive('levelconnector', function($timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        parent: '@',
+        child: '@'
+      },
+      //templateUrl: 'templates/levelconnector.html',
+      template: '<div class="line"></div>',
+      link: function(scope, element, attrs) {
 
-        $timeout.cancel($timeout(connectLevels, 0))
+        connect(element, document.getElementById(scope.child), document.getElementById(scope.parent))
 
       }
     }
   })
 
+    var addSyles = function(elm, cx, cy, length, angle) {
+      elm = angular.element(elm.children('div')[0])
+      elm.css('left', cx + 'px')
+      elm.css('top', cy + 'px')
+      elm.css('width', length + 'px')
+      elm.css('-webkit-transform', 'rotate(' + angle + 'deg)')
+      elm.css('-ms-transform', 'rotate(' + angle + 'deg)')
+      elm.css('transform', 'rotate(' + angle + 'deg)')
+    }
+
     //http://stackoverflow.com/questions/8672369/how-to-draw-a-line-between-two-divs
-    var connect = function(elm, div1, div2, color) {
+    var connect = function(elm, div1, div2) {
       var off1 = getOffset(div1)
       var off2 = getOffset(div2)
       // top center
@@ -86,11 +88,8 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
       var cy = ((y1 + y2) / 2) - 1
       // angle
       var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI)
-      // // make hr
-      var htmlLine = "<div style='padding:0px; margin:0px; height:2px; background-color:rgba(0,0,0,.6); line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />"
 
-      //document.body.innerHTML += htmlLine
-      elm.append(htmlLine)
+      addSyles(elm, cx, cy, length, angle)
     }
 
     var getOffset = function(el) {
@@ -99,7 +98,6 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
         var w = el.offsetWidth || 0
         var h = el.offsetHeight || 0
         // //needs debugging for scroll
-        // //infine loop. :(
         while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
             x += el.offsetLeft - el.scrollLeft
             y += el.offsetTop - el.scrollTop

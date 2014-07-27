@@ -49,3 +49,12 @@ article {
 .blue {
   border: 2px black solid;
 }
+
+.line {
+  padding: 0px;
+  margin: 0px;
+  height: 2px;
+  background-color: rgba(0,0,0,.6);
+  line-height: 1px;
+  position: absolute;
+}
