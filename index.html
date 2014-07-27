@@ -15,12 +15,11 @@
     <div class="levelVal" ng-repeat="(levelValue, levels) in ctrl.levels">
       <div class="levelValLabel">{{levelValue}}</div>
 
-      <div class="levels">
-        <level ng-repeat="level in levels" level="level"></level>
+      <div class="levelRow">
+        <levelinfo ng-repeat="levelthing in levels" level="levelthing"></levelinfo>
       </div>
 
     </div>
-
 
   </body>
 </html>

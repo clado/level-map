@@ -1,5 +1,8 @@
 <section id="{{level.url}}">
   <p>{{level.url}}</p>
   <p>{{level.title}}</p>
-  <article>{{level.solution}}</article>
+  <article>
+    <div class="revealSolution" ng-class="stuff" ng-click="ctrl.do()" onclick="console.log('things')"></div>
+    {{level.solution}}
+  </article>
 </section>

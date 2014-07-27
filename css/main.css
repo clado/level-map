@@ -17,7 +17,7 @@ body {
   height: 100%;
 }
 
-.levels {
+.levelRow {
   display: flex;
   justify-content: center;
   padding: 5px 0px;
@@ -33,5 +33,19 @@ section {
 
 article {
 	overflow: hidden;
-	height: 0px;
+	height: 10px;
+  position: relative;
+}
+
+.revealSolution {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #123456;
+}
+
+.blue {
+  border: 2px black solid;
 }
