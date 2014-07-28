@@ -3,8 +3,9 @@
 	<head>
     <meta charset="UTF-8">
     <title>Level Map</title>
-    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="css/button.min.css" rel="stylesheet" type="text/css" />
     <link href="css/icon.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
     <script src="js/angular.min.js" type="text/javascript"></script>
     <script src="js/angular-local-storage.js" type="text/javascript"></script>
     <script src="js/level-map-controller.js" type="text/javascript"></script>
@@ -13,13 +14,25 @@
   <body ng-controller="LevelMapController as ctrl">
     <h1>Level Map</h1>
 
+    <nav>
+      <button class="ui tiny basic button" ng-click="ctrl.edit = !ctrl.edit">Edit</button>
+    </nav>
+
     <div class="levelVal" ng-repeat="(levelValue, levels) in ctrl.levels">
       <div class="levelValLabel">{{levelValue}}</div>
-
       <div class="levelRow">
         <levelinfo ng-repeat="leveldata in levels" level="leveldata"></levelinfo>
+        <button class="ui icon green button center" ng-show="ctrl.edit">
+          <i class="add icon"></i>
+        </button>
       </div>
-
+    </div>
+    <div class="levelVal" ng-show="ctrl.edit">
+      <div class="center">
+        <button class="ui icon green button center">
+          <i class="add icon"></i>
+        </button>
+      </div>
     </div>
 
     <div ng-repeat="(levelValue, levels) in ctrl.levels">

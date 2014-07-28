@@ -18,6 +18,8 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
     this.init = function(){
       var levels = localStorageService.get('levels')
       this.levels = levels ? levels : this.defaults
+
+      this.edit = false
     }
 
     this.init()
@@ -30,7 +32,7 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
         level: '='
       },
       //templateUrl: 'templates/level.html',
-      template: '<section id="{{level.url}}"><p>{{level.url}}</p><div class="solutionBar" ng-click="hidden = !hidden">Solution<i class="angle up icon revealSolution"></i></div><article ng-class="hidden ? \'hidden\' : \'shown\'">{{level.solution}}</article></section>',
+      template: '<section id="{{level.url}}"><p class="url">{{level.url}}</p><div class="solutionBar" ng-click="hidden = !hidden">Solution<i class="angle up icon revealSolution" ng-class="hidden ? \'\' : \'rotatepi\'"></i></div><article ng-class="hidden ? \'hidden\' : \'shown\'">{{level.solution}}</article></section>',
       link: function(scope, element, attrs) {
 
         scope.hidden = true
