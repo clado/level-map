@@ -30,16 +30,10 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
         level: '='
       },
       //templateUrl: 'templates/level.html',
-      template: '<section id="{{level.url}}"><p>{{level.url}}</p><article><i class="angle up icon revealSolution"></i>{{level.solution}}</article></section>',
+      template: '<section id="{{level.url}}"><p>{{level.url}}</p><div class="solutionBar" ng-click="hidden = !hidden">Solution<i class="angle up icon revealSolution"></i></div><article ng-class="hidden ? \'hidden\' : \'shown\'">{{level.solution}}</article></section>',
       link: function(scope, element, attrs) {
 
-        scope.hideSolution = function() {
-
-        }
-
-        scope.showSolution = function() {
-
-        }
+        scope.hidden = true
 
       }
     }
