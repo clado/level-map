@@ -33,7 +33,7 @@ section {
 
 article {
 	overflow: hidden;
-	height: 10px;
+	/*height: 10px;*/
   position: relative;
 }
 
@@ -41,13 +41,8 @@ article {
   position: absolute;
   right: 0;
   top: 0;
-  width: 10px;
   height: 10px;
-  background-color: #123456;
-}
-
-.blue {
-  border: 2px black solid;
+  width: 10px;
 }
 
 .line {
