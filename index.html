@@ -15,22 +15,25 @@
     <h1>Level Map</h1>
 
     <nav>
-      <button class="ui tiny basic button" ng-click="ctrl.edit = !ctrl.edit">Edit</button>
+      <button class="ui tiny basic button" ng-click="ctrl.edit = !ctrl.edit">
+        <span ng-if="!ctrl.edit">Edit</span>
+        <span ng-if="ctrl.edit">Stop Editing</span>
+      </button>
     </nav>
 
-    <div class="levelVal" ng-repeat="(levelValue, levels) in ctrl.levels">
-      <div class="levelValLabel">{{levelValue}}</div>
+    <div class="levelVal" ng-repeat="levels in ctrl.levels">
+      <div class="levelValLabel">{{$index + 1}}</div>
       <div class="levelRow">
-        <levelinfo ng-repeat="leveldata in levels" level="leveldata"></levelinfo>
-        <button class="ui icon green button center" ng-show="ctrl.edit">
+        <levelinfo ng-repeat="leveldata in levels" level="leveldata" edit="ctrl.edit"></levelinfo>
+        <button class="ui icon green button center" ng-show="ctrl.edit" ng-click="ctrl.addLevel($index)">
           <i class="add icon"></i>
         </button>
       </div>
     </div>
     <div class="levelVal" ng-show="ctrl.edit">
       <div class="center">
-        <button class="ui icon green button center">
-          <i class="add icon"></i>
+        <button class="ui green button center" ng-click="ctrl.addLevelVal()">
+          <i class="add icon"></i>Add Row
         </button>
       </div>
     </div>

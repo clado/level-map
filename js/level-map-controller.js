@@ -1,25 +1,39 @@
 var app = angular.module('levelApp', ['LocalStorageModule'])
   .controller('LevelMapController', ['localStorageService', function(localStorageService){
 
-    this.defaults = {
-      1: [
+    this.defaults = [
+      [
         { 'url': 'thingading.html', 'parents':[], 'solution': 'This is the wrong solution' },
       ],
-      2: [
+      [
         { 'url': 'things.html', 'parents':['thingading.html'], 'solution': 'This is the solution' },
         { 'url': 'stuff.html', 'parents':['thingading.html'], 'solution': 'This is the solution to the second thing' }
       ],
-      3: [
+      [
         { 'url': 'a/things.html', 'parents':['things.html', 'stuff.html'], 'solution': 'This is the solution' },
         { 'url': 'a/stuff.html', 'parents':['stuff.html'], 'solution': 'This is the solution to the second thing' }
       ]
-    }
+    ]
 
     this.init = function(){
-      var levels = localStorageService.get('levels')
-      this.levels = levels ? levels : this.defaults
+      this.levels = localStorageService.get('levels') || this.defaults
 
       this.edit = false
+    }
+
+    this.addLevel = function(index){
+      this.levels[index].push({})
+      this.save()
+    }
+
+    this.addLevelVal = function(){
+      console.log('Adding level val')
+      this.levels.push([{}])
+      this.save()
+    }
+
+    this.save = function(){
+      //localStorageService.add('levelKey', JSON.stringify(this.levels))
     }
 
     this.init()
@@ -29,13 +43,14 @@ var app = angular.module('levelApp', ['LocalStorageModule'])
     return {
       restrict: 'E',
       scope: {
-        level: '='
+        level: '=',
+        edit: '='
       },
       //templateUrl: 'templates/level.html',
-      template: '<section id="{{level.url}}"><p class="url">{{level.url}}</p><div class="solutionBar" ng-click="hidden = !hidden">Solution<i class="angle up icon revealSolution" ng-class="hidden ? \'\' : \'rotatepi\'"></i></div><article ng-class="hidden ? \'hidden\' : \'shown\'">{{level.solution}}</article></section>',
+      template: '<section id="{{level.url}}"><p class="url"><span ng-show="!edit">{{level.url}}</span><input ng-show="edit" ng-model="level.url" /></p><div class="solutionBar" ng-click="showing = !showing">Solution<i class="angle up icon revealSolution" ng-class="showing || edit ? \'rotatepi\' : \'\'"></i></div><article ng-class="showing || edit ? \'shown\' : \'hidden\'"><span ng-show="!edit">{{level.solution}}</span><textarea ng-show="edit" ng-model="level.solution"></textarea></article></section>',
       link: function(scope, element, attrs) {
 
-        scope.hidden = true
+        scope.showing = false
 
       }
     }
